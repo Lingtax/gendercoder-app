@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(DT)
 
 dashboardPage(
     dashboardHeader(title = "Gendercoder app"),
@@ -10,9 +11,23 @@ dashboardPage(
                              "text/comma-separated-values,text/plain",
                              ".csv", 
                              ".dta", 
-                             ".sav"))
+                             ".sav"), 
+                placeholder = ".dta, .sav, or .csv"),
+        
+        
+        
+        # Control
+        radioButtons("dictionary", "Coding dictionary:",   
+                     choiceValues = c("broad", 'narrow'),
+                     choiceNames = c("Broad", 'Narrow'),
+                     selected = "broad"), 
+        
+        # Variable selection:
+        htmlOutput("varselect")
+        
     ),
     dashboardBody(
-        tableOutput("out1")
+        
+        DTOutput("out1")
     )
 )
