@@ -29,5 +29,6 @@ dashboardPage(
     dashboardBody(
         
         DTOutput("out1")
+
     )
 )

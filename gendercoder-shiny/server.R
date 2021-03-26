@@ -3,6 +3,7 @@ library(haven)
 library(gendercoder)
 library(dplyr)
 library(DT)
+library(rlang)
 
 shinyServer(function(input, output) {
 
@@ -16,9 +17,8 @@ shinyServer(function(input, output) {
         if (grepl(".dta$", inFile$name)) df <- read_dta(inFile$datapath) 
         if (grepl(".csv$", inFile$name)) df <- read_csv(inFile$datapath) 
         
-        # work out how to use recode_gender(input$vars, dictionary = sym(input$dictionary)) here
+        # work out how to use recode_gender(input$vars, dictionary = !!sym(input$dictionary)) here
         df 
-        
         })
     
     output$out1 <-  renderDT({df()})
