@@ -17,12 +17,14 @@ shinyServer(function(input, output) {
         if (grepl(".dta$", inFile$name)) df <- read_dta(inFile$datapath) 
         if (grepl(".csv$", inFile$name)) df <- read_csv(inFile$datapath) 
         
-        # work out how to use recode_gender(input$vars, dictionary = !!sym(input$dictionary)) here
-        df 
+        # work out how to use recode_gender(!!sym(input$vars), dictionary = !!sym(input$dictionary)) here
+         df %>% mutate(coded_gender = recode_gender(vars(input$vars), dictionary = !!sym(input$dictionary)))
+        
         })
     
+    
     output$out1 <-  renderDT({df()})
-
+    
     output$varselect <- renderUI({
         
         # Variable selection:    
