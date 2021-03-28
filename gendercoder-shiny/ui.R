@@ -23,11 +23,18 @@ dashboardPage(
                      selected = "broad"), 
         
         # Variable selection:
-        htmlOutput("varselect")
+        htmlOutput("varselect"),
+        
+        radioButtons("dlformat", "Download format:",
+                     choiceValues = c(".csv", ".sav", ".dta"),
+                     choiceNames = c(".csv", ".sav (SPSS)", ".dta (STATA)"),
+                     selected = ".csv"),
+        
+        downloadButton("downloadData", "Download")
         
     ),
     dashboardBody(
-        
+
         DTOutput("out1")
 
     )
