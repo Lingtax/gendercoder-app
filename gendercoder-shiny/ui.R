@@ -34,8 +34,16 @@ dashboardPage(
         
     ),
     dashboardBody(
-
-        DTOutput("out1")
+        
+        DTOutput("out1"),
+        
+        hr(),
+        
+        h2("Credits"),
+        p("This is an implementation of the gendercoder R package, developed by Jennifer Beaudry, Emily Kothe, Felix Singleton Thorn, Rhydwyn McGuire, Nicholas Tierney and Mathew Ling."),
+        p("Development began on unceded Wurundjeri land, at the rOpenSci ozunconf, 2018."), 
+        p("This Shiny app was developed by Mathew Ling (@Lingtax)")
+        
 
     )
 )

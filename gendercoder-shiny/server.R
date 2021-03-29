@@ -19,9 +19,18 @@ shinyServer(function(input, output) {
         if (grepl(".dta$", inFile$name)) df <- read_dta(inFile$datapath) 
         if (grepl(".csv$", inFile$name)) df <- read_csv(inFile$datapath) 
         
-        # work out how to use recode_gender(!!sym(input$vars), dictionary = !!sym(input$dictionary)) here
-         df #%>% mutate(coded_gender = recode_gender(.data[[input$vars]], dictionary = !!sym(input$dictionary)))
+        df
         
+        })
+    
+    
+    df_out <-  reactive({
+        
+        if(input$dictionary == "broad") {df_out <- df() %>% bind_cols(gender_coded = recode_gender(df()[[input$vars]], broad))}
+        if(input$dictionary == "narrow") {df_out <- df() %>% bind_cols(gender_coded = recode_gender(df()[[input$vars]], narrow))}
+        
+        df_out
+    
         })
     
     # Generate the gender selection
@@ -41,13 +50,13 @@ shinyServer(function(input, output) {
       },
       content = function(file) {
           
-          if (input$dlformat == ".csv") write_csv(df(), file)
-          if (input$dlformat == ".sav") write_sav(df(), file)
-          if (input$dlformat == ".dta") write_dta(df(), file)
+          if (input$dlformat == ".csv") write_csv(df_out(), file)
+          if (input$dlformat == ".sav") write_sav(df_out(), file)
+          if (input$dlformat == ".dta") write_dta(df_out(), file)
       }
     )
-    
-    output$out1 <-  renderDT({df()})
+
+    output$out1 <-  renderDT({df_out()})
     
        
 })
